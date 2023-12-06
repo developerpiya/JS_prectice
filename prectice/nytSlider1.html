@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+.slider-container {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #f1f1f1;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slider">
+          <img src="image1.jpg" alt="Image 1" class="slide">
+          <img src="image2.jpg" alt="Image 2" class="slide">
+          <img src="image3.jpg" alt="Image 3" class="slide">
+          <img src="image4.jpg" alt="Image 4" class="slide">
+        </div>
+        <button class="prev" onclick="changeSlide(-1)">❮ Prev</button>
+        <button class="next" onclick="changeSlide(1)">Next ❯</button>
+      </div>
+      
+</body>
+</html>

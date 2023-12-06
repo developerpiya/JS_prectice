@@ -195,11 +195,11 @@
 
         .slider__count .count {
             width: 25%;
-            /* display: flex;
-            gap: 2px; */
             border-right: 3px solid #f7f7f7;
         }
-        
+        .hidden{
+            display: flex;
+        }
     </style>
 </head>
 
@@ -207,8 +207,10 @@
     <div class="container">
         <!-- slider -->
         <div class="slider">
-            <img src="../images/img-2.webp" alt="" class="staticSlide">
-            <img src="../images/img-1.webp" alt="" class="slide">
+            <img src="../images/img-2.webp" alt="" class="slide-item sliding-left">
+            <img src="../images/img-1.webp" alt="" class="slide-item hidden">
+            <img src="../images/img-1.webp" alt="" class="slide-item hidden">
+            <img src="../images/img-1.webp" alt="" class="slide-item hidden">
         </div>
 
         <!-- buttons -->
@@ -242,6 +244,7 @@
         var i = 0;
         var staticSlide = document.querySelector('.staticSlide');
         var slide = document.querySelector('.slide');
+        var imgs = document.querySelector('img');
         // console.log(arr.length);
 
         //for caption defining
@@ -249,84 +252,84 @@
         var staticCaption = document.querySelector('.staticCaption');
         var slideCaption = document.querySelector('.slideCaption');
         var currentIndex =0;
+        var imgs = document.querySelectorAll('.slide-item');
+        let totalImgs = imgs.length;
+        let imgPosition = 0;
 
-        function update() {
-        if (i == arr.length - 1) {
-            // console.log('if i==3', i);
-            slide.src = arr[i];
-            slideCaption.innerHTML = captionArr[i];
-            staticSlide.src = arr[0];
-            staticCaption.innerHTML = captionArr[0];
-            slide.classList.add('sliding-left');
-            slideCaption.classList.add('caption-next');
-            i = 0;
-        } else if (i < arr.length - 1) {
-            // console.log('i<3',i)
-            slide.src = arr[i];
-            slideCaption.innerHTML = captionArr[i];
-            staticSlide.src = arr[i + 1];
-            staticCaption.innerHTML = captionArr[i + 1];
-            slide.classList.add('sliding-left');
-            
-            slideCaption.classList.add('caption-next');
-            i++;
-        }
-
-        }
-
-        function prev() {
-            console.log('sliding-righ add',document.querySelector('.sliding-left'))
-        document.querySelector('.sliding-left') ? (slide.classList.remove('sliding-left'), console.log('sliding-righ exist remove',slide.classList.remove('sliding-left')) ):( slide.classList.add('sliding-left'),console.log('false condition'));
-        
-        if (i == arr.length - 1) {
-            slide.src = arr[i];
-            slideCaption.innerHTML = captionArr[i];
-            staticSlide.src = arr[0];
-            staticCaption.innerHTML = captionArr[0];
-            slide.classList.add('sliding-left')
-            i = 0;
-        } else if (i < arr.length - 1) {
-            console.log('else condition');
-            slide.src = arr[i];
-            slideCaption.innerHTML = captionArr[i];
-            staticSlide.src = arr[i + 1];
-            staticCaption.innerHTML = captionArr[i + 1];
-            console.log(slide.classList.add('sliding-left'));
-            slide.classList.add('sliding-left');
-            i++;
-        }
-        
-      
-        slideCaption.classList.add('caption-next');
-        
-
-        }  
-       
-      function next() {
-            if (i == arr.length - 1) {
-                console.log('i==arr.length-1', i)
-                slide.src = arr[i];
-                slideCaption.innerHTML = captionArr[i];
-                staticSlide.src = arr[arr.length - 2];
-                staticCaption.innerHTML = captionArr[arr.length - 2];
-                i--;
-            } else if (i == 0) {
-                console.log('i==0', i)
-                slide.src = arr[0];
-                slideCaption.innerHTML = captionArr[0];
-                staticSlide.src = arr[arr.length - 1];
-                staticCaption.innerHTML = captionArr[arr.length - 1];
-                i = arr.length - 1;
-            } else {
-                slide.src = arr[i];
-                slideCaption.innerHTML = captionArr[i];
-                staticSlide.src = arr[i - 1];
-                staticCaption.innerHTML = captionArr[i - 1];
-                i--;
+ function updatePosition() {
+            //   Images
+            for (let img of imgs) {
+                img.classList.remove('sliding-right');
+                img.classList.add('hidden');
             }
-            slide.classList.add('sliding-right');
-                slideCaption.classList.add('caption-next');
+            imgs[imgPosition].classList.remove('hidden');
+            imgs[imgPosition].classList.add('sliding-right');
+
         }
+ // Next Img
+ function next() {
+            if (imgPosition === totalImgs - 1) {
+                imgPosition = 0;
+            } else {
+                imgPosition++;
+            }
+            updatePosition();
+        }
+        //Previous Image
+        function prev() {
+            if (imgPosition === 0) {
+                imgPosition = totalImgs - 1;
+            } else {
+                imgPosition--;
+            }
+            updatePosition();
+        }
+
+    //     function prev() {
+    //     if (i == arr.length - 1) {
+    //         slide.src = arr[i];
+    //         slideCaption.innerHTML = captionArr[i];
+    //         staticSlide.src = arr[0];
+    //         staticCaption.innerHTML = captionArr[0];
+            
+    //         i = 0;
+    //     } else if (i < arr.length - 1) {
+    //         slide.src = arr[i];
+    //         slideCaption.innerHTML = captionArr[i];
+    //         staticSlide.src = arr[i + 1];
+    //         staticCaption.innerHTML = captionArr[i + 1];
+    //         i++;
+    //     }
+    //     slide.classList.add('sliding-left');
+    //     slideCaption.classList.add('caption-next');
+
+    //     }  
+        
+    //   function next() {
+    //         if (i == arr.length - 1) {
+    //             console.log('i==arr.length-1', i)
+    //             slide.src = arr[i];
+    //             slideCaption.innerHTML = captionArr[i];
+    //             staticSlide.src = arr[arr.length - 2];
+    //             staticCaption.innerHTML = captionArr[arr.length - 2];
+    //             i--;
+    //         } else if (i == 0) {
+    //             console.log('i==0', i)
+    //             slide.src = arr[0];
+    //             slideCaption.innerHTML = captionArr[0];
+    //             staticSlide.src = arr[arr.length - 1];
+    //             staticCaption.innerHTML = captionArr[arr.length - 1];
+    //             i = arr.length - 1;
+    //         } else {
+    //             slide.src = arr[i];
+    //             slideCaption.innerHTML = captionArr[i];
+    //             staticSlide.src = arr[i - 1];
+    //             staticCaption.innerHTML = captionArr[i - 1];
+    //             i--;
+    //         }
+    //         slide.classList.add('sliding-right');
+    //             slideCaption.classList.add('caption-next');
+    //     }
 
         document.querySelector('.container').addEventListener('mouseleave', function () {
             document.querySelector('.buttons').style.display = 'none';

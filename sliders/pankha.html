@@ -38,12 +38,6 @@
             max-width: 600px;
         }
 
-        .carousel-container,
-        .carousel-caption {
-            /* box-shadow: 0 0 5px rgb(204, 204, 204); */
-            
-        }
-
         .carousel-container img {
             border-radius: .5em;
         }
@@ -55,6 +49,7 @@
         .visible {
             display: block;
         }
+       
     
         .arrow {
             display: none;
@@ -213,7 +208,6 @@
             //   Images
             for (let img of imgs) {
                 img.classList.remove('visible');
-                
                 img.classList.add('hidden');
             }
             imgs[imgPosition].classList.remove('hidden');

@@ -16,16 +16,18 @@
     .slider {
       position: absolute;
       width: 200%;
+      display: flex;
     }
 
-    .current-image {
+    .current-image,
+    .sliding-image {
       width: 50%;
+      transition: transform 2s ease, opacity 2s ease;
     }
 
     .sliding-image {
-      width: 50%;
       opacity: 0;
-      transition: transform 2s ease, opacity 2s ease;
+      transform: translateX(0%);
     }
   </style>
 </head>
@@ -35,29 +37,19 @@
     <div class="slider">
       <img src="http://www.freedigitalphotos.net/images/img/homepage/87357.jpg" alt="Image 1" class="current-image">
       <img src="http://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg" alt="Image 2" class="sliding-image">
-      <!-- <img src="http://www.freedigitalphotos.net/images/img/homepage/87357.jpg" alt="Image 1" class="current-image">
-          <img src="http://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg" alt="Image 2" class="sliding-image"> -->
     </div>
   </div>
 
   <script>
     const slidingImage = document.querySelector('.sliding-image');
 
-    // Function to slide the image
     function slideImage() {
       slidingImage.style.opacity = '1';
       slidingImage.style.transform = 'translateX(-100%)';
     }
 
-    // Initially hide the sliding image
-    // slidingImage.style.opacity = '0';
-    // slidingImage.style.transform = 'translateX(0)';
-
-    // Set timeout to slide the image after a certain delay (in milliseconds)
-    setTimeout(slideImage, 1000); // Change image after 3 seconds
-
-
-  </script>
+    setTimeout(slideImage, 1000); 
+    </script>
 </body>
 
 </html>

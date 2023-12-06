@@ -1,87 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-.slider-container {
-  position: relative;
-  width: 100%;
-  max-width: 600px; /* Adjust width as needed */
-  margin: 0 auto;
-  /* overflow: hidden; */
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      width: 500px;
+      height: 350px;
+      margin: auto;
+      /* position: relative; */
+      overflow: hidden;
+    }
 
-.slider {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  height: 100%;
-}
+    .slider {
+      display: flex;
+      transition: transform 0.5s ;
+      position: relative;
+    }
+    .slide {
+      width: 100%;
+      /* position: absolute; */
+    }
+    .arrow {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      border: none;
+      margin: -1.5em 0.3em 0 0.3em;
+      padding: 8px 15px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5em;
+      transition: 1s ease;
+      user-select: none;
+      background-color: #9E9E9E;
+    }
 
-.slide {
-  width: 100%;
-  height: 100%;
-  /* transition: transform 0.5s ease; */
-}
-.slide1{
-    animation: move1 4s forwards;
-}
-@keyframes move1{
-0%{
-    transfrom:translateX(0%)
-}
-100%{
-    transform:translateX(-100%)
-}
-}
-.slide2{
-    animation: move1 4s forwards;
-}
-@keyframes move1{
-0%{
-    transfrom:translateX(-100%)
-}
-100%{
-    transform:translateX(-200%)
-}
-}
-.slide3{
-    animation: move1 4s forwards;
-}
-@keyframes move1{
-0%{
-    transfrom:translateX(-200%)
-}
-100%{
-    transform:translateX(-300%)
-}
-}
-.slide4{
-    animation: move1 4s forwards;
-}
-@keyframes move1{
-0%{
-    transfrom:translateX(-300%)
-}
-100%{
-    transform:translateX(-400%)
-}
-}
+    .next {
+      left: -7px;
+    }
 
-    </style>
+    .prev {
+      right: -7px;
+    }
+
+    .prev:hover,
+    .next:hover {
+      box-shadow: 0 0 5px #fff;
+      border: 1px solid #fff;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="slider-container">
-        <div class="slider">
-          <img class="slide slide1" src="../images/img-1.webp" alt="Image 1">
-          <img class="slide slide2" src="../images/img-2.webp" alt="Image 2">
-          <img class="slide slide3" src="../images/img-3.webp" alt="Image 3">
-          <img class="slide slide4" src="../images/img-4.webp" alt="Image 4">
-        </div>
-      </div>
+  <div class="container">
+    <!-- slider -->
+    <div class="slider">
+      <img src="../images/img-1.webp" alt="" class="slide">
+      <img src="../images/img-2.webp" alt="" class="slide">
+      <img src="../images/img-3.webp" alt="" class="slide">
+      <img src="../images/img-4.webp" alt="" class="slide">
+    </div>
 
+    <!-- buttons -->
+    <div class="buttons">
+      <button class="arrow prev" onclick="prevSlide()">&#10095;++</button>
+      <button class="arrow next" onclick="nextSlide()">&#10094;--</button>
+    </div>
 
+  </div>
+  <script>
+    let currentIndex = 0;
+    const container = document.querySelector('.slider');
+    const items = document.querySelectorAll('.slide');
+    const totalItems = items.length;
+
+    function updateCarousel() {
+      container.style.transform = `translateX(${-currentIndex * 100}%)`;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalItems;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+      updateCarousel();
+    }
+  </script>
 </body>
+
 </html>
