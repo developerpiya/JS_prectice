@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .slider-container {
+  position: relative;
+  width: 100%;
+  height: 400px; /* Set your desired height */
+  overflow: hidden;
+}
+
+/* .background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('background.jpg'); 
+  background-size: cover;
+  z-index: 0;
+} */
+
+.slider {
+  display: flex;
+  width: 300%; 
+  justify-content: center;
+  transition: transform 0.5s ease;
+}
+
+.slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* position: absolute; */
+}
+
+button {
+  margin-top: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <div class="background-image"></div>
+        <div class="slider">
+          <img src="../images/img-1.webp" alt="Slide 1">
+          <img src="../images/img-2.webp" alt="Slide 2">
+          <img src="../images/img-3.webp" alt="Slide 3">
+          <!-- Add more images here as needed -->
+        </div>
+      </div>
+      <button id="prevBtn">Previous</button>
+      <button id="nextBtn">Next</button>
+      <script>
+const slider = document.querySelector('.slider');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+let currentIndex = 0;
+
+function showSlide(index) {
+  const slideWidth = slider.clientWidth / 3; // Adjust based on the number of slides
+  const newPosition = -1 * slideWidth * index;
+  slider.style.transform = `translateX(${newPosition}px)`;
+}
+
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % 3; // Change '3' to the number of slides
+  showSlide(currentIndex);
+});
+
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + 3) % 3; // Change '3' to the number of slides
+  showSlide(currentIndex);
+});
+
+      </script>
+</body>
+</html>

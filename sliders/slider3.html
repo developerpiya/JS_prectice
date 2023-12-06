@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ede6d6;
+        }
+        .slide-container{
+            width: 800px;
+            height: 350px;
+            border: 3px solid #ede6d6;
+            box-shadow: 0 0 8px 2px rgba(0,0,0,01.2em);
+        }
+        .slide-container .slides{
+            width: 100%;
+            height: calc(100% - 40px);
+            position: relative;
+            overflow: hidden;
+        }
+        .slide-container .slides img{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            object-fit: cover;
+        }
+        .slide-container .slides img .active{
+            top: 0;
+            transition: transform 0.5 ease-in, opacity 0.5 ease-in;
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        span.next, span.prev{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 14px;
+            color: #eee;
+            font-size: 24px;
+            font-weight: bold;
+            transition: 0.5s;
+            user-select: none;
+            cursor: pointer;
+            border-radius: 3px;
+            z-index: 1;
+        }
+        span.next{
+            right: 20px;
+        }
+        span.prev{
+            left: 20px;
+        }
+        span.next:hover, span.prev:hover{
+            background-color: #ede6d6;
+            opacity: 0.8;
+            color: #222;
+        }
+        @keyframes next1{
+            from{
+                transform: translate(0%);
+            }to{
+                transform: translate(-100%);
+            }
+        }
+        @keyframes next2{
+            from{
+                transform: translate(100%);
+            }to{
+                transform: translate(0%);
+            }
+        }
+
+        @keyframes prev1{
+            from{
+                transform: translate(0%);
+            }to{
+                transform: translate(100%);
+            }
+        }
+        @keyframes prev2{
+            from{
+                transform: translate(-100%);
+            }to{
+                transform: translate(0%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="slides">
+            <img src="http://www.freedigitalphotos.net/images/img/homepage/87357.jpg" alt="Image 1" class="active">
+            <img src="http://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg" alt="Image 2" class="sliding-image">
+            <img src="http://www.freedigitalphotos.net/images/img/homepage/87357.jpg" alt="Image 1" class="current-image">
+            <img src="http://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg" alt="Image 2" class="sliding-image">
+          </div>
+
+          <div class="buttons">
+            <span class="next">&#10095;</span>
+            <span class="prev">&#10094;</span>
+          </div>
+    </div>
+    <script>
+        let slideImgs = document.querySelectorAll('img');
+        let next = document.querySelector('.next');
+        let prev = document.querySelector('.prev');
+        var counter = 0;
+
+        console.log('current image',document.querySelector('img'));
+        //code for next button
+        next.addEventListener('click',slideNext);
+
+        function slideNext(){
+            // slideImgs[counter].style.opacity = '1'; 
+            console.log('next image',slideImgs[counter]);
+            slideImgs[counter].style.animation = 'next1 2s ease-in forwards';
+            if(counter >= slideImgs.length-1){
+                counter = 0;
+            }else{
+                counter++;
+            }
+            // slideImgs.style.opacity = '1'; 
+//   slideImgs.style.transform = 'translateX(-100%)'; 
+            slideImgs[counter].style.animation = 'next2 2s ease-in forwards'; 
+        }
+
+        //code for prev button
+        prev.addEventListener('click',slidePrev);
+
+        function slidePrev(){
+            slideImgs[counter].style.animation = 'prev1 2s ease-in forwards';
+            if(counter == 0){
+                counter = slideImgs.length - 1;
+            }else{
+                counter--;
+            }
+            slideImgs[counter].style.animation = 'prev2 2s ease-in forwards'; 
+        }
+
+        //AutoSliding
+        function autoSlide(){
+            deleteInterval = setInterval(timer, 1000);
+            function timer(){
+                slideNext();
+            }
+        }
+        // autoSlide();
+
+        //stop auto sliding when mouse is over
+        // const container = document.querySelector('.slide-container');
+        // container.addEventListener('mouseover',function(){
+        //     clearInterval(deleteInterval);
+        // })
+
+        //Resume slide when mouse out
+        // container.addEventListener('mouseleave',autoSlide)
+    </script>
+</body>
+</html>

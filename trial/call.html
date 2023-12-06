@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let name={
+            firstname:'piya',
+            lastname:'kushwah'
+        }
+        let name2 ={
+            firstname:'pankha',
+            lastname :'Jadoun'
+        }
+        function printfullname(country, state){
+            console.log(this.firstname +' '+ this.lastname + ' from ' + country + ' ' + state)
+        }
+
+        //call is used to function borrowing
+        printfullname.call(name,'Delhi','UP');
+        printfullname.call(name2,'Mumbai','MP')
+    </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automate Slider</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .slider__container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .slider__container img {
+            display: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slider__container img.active {
+            display: block;
+        }
+
+        /* progress bar */
+
+        .progress {
+            height: 20px;
+            width: 80%;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .progress #length {
+            position: absolute;
+            top: 0px;
+            /* bottom: 30px; */
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #bdd5ea;
+        }
+
+        .progress #progress__animation {
+            position: absolute;
+            /* bottom: 30px; */
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #577399;
+            z-index: 55;
+            animation: moving;
+            animation-duration: 15s;
+            /* 3s per slide */
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes moving {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .progress .slider__count {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 99;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            /* border: 1px solid #f7f7f7; */
+        }
+
+        .slider__count .count {
+            width: 20%;
+            /* display: flex;
+            gap: 2px; */
+            border-right: 1px solid #f7f7f7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="slider__container">
+            <img src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.2116175301.1700611200&semt=sph" alt="" class="slide active">
+            <img src="https://buffer.com/library/content/images/2023/10/free-images.jpg" alt="" class="slide">
+            <img src="https://media.istockphoto.com/id/505239248/photo/humayun-tomb-new-delhi-india.jpg?s=612x612&w=0&k=20&c=UQTU6YOnVsSklzHi34cOhNW5AhsACDxKLiD9--T-3Kg="
+                alt="" class="slide">
+            <img src="https://cdn.pixabay.com/photo/2014/02/27/16/10/flowers-276014_640.jpg"
+                alt="" class="slide">
+            <img src="https://media.istockphoto.com/id/505239248/photo/humayun-tomb-new-delhi-india.jpg?s=612x612&w=0&k=20&c=UQTU6YOnVsSklzHi34cOhNW5AhsACDxKLiD9--T-3Kg="
+                alt="" class="slide">
+        </div>
+
+        <div class="progress">
+            <div id="length"></div>
+            <div id="progress__animation"></div>
+            <div class="slider__count">
+                <div class="count"></div>
+                <div class="count"></div>
+                <div class="count"></div>
+                <div class="count"></div>
+                <div class="count"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        function slideShow() {
+            const current = document.querySelector('.active');
+            current.classList.remove('active');
+            if (current.nextElementSibling) {
+                current.nextElementSibling.classList.add('active');
+            } else {
+                slides[0].classList.add('active');
+            }
+            setTimeout('slideShow()', 3000)
+        }
+        window.onload = slideShow
+    </script>
+</body>
+
+</html>

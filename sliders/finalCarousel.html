@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        img {
+            width: 100%;
+            height: 300px;
+            transform: scale(0.9);
+            animation: 5s ease-in 1s infinite running zoomi;
+        }
+
+        @keyframes zoomi {
+            from {
+                transform: scale(0.9);
+
+            }
+
+            to {
+                transform: scale(1);
+
+            }
+        }
+
+        .carousel-container {
+            position: relative;
+            margin: 1em auto .5em auto;
+            max-width: 600px;
+        }
+
+        .carousel-container,
+        .carousel-caption {
+            box-shadow: 0 0 5px rgb(204, 204, 204);
+            ;
+        }
+
+        .carousel-container img {
+            border-radius: .5em;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .visible {
+            display: block;
+        }
+
+        .arrow {
+            display: inline;
+        }
+
+        .prev,
+        .arrow {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin: -1.5em .3em 0 .3em;
+            padding: 1em;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: 0.3s ease;
+            border-radius: .5em;
+            user-select: none;
+            background-color: rgba(204, 204, 204, 0.3);
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .prev:hover,
+        .next:hover {
+            box-shadow: 0 0 5px #fff;
+            border: 1px solid #fff;
+        }
+
+        /* .slide-numbers {
+            text-align: center;
+            position: absolute;
+            bottom: 1em;
+            left: 15%;
+
+        } */
+
+        /* .dot {
+            cursor: pointer;
+            height: 3px;
+            width: 100px;
+            margin: 0 2px;
+            background-color: rgba(204, 204, 204, 0.3);
+           
+            
+
+
+        }  */
+
+        /* .dot:hover,
+        .active {
+            background-color: rgb(204, 204, 204);
+            height: 3px;
+            width: 100px;
+            animation: mymove 5s infinite;
+            animation-timing-function: ease-in;
+            position: relative;
+        } */
+
+        /* @keyframes mymove {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100px;
+            }
+        } */
+
+
+
+        /* .dot:hover {
+            box-shadow: 0 0 5px #fff;
+        } */
+
+        .carousel-caption {
+            text-align: center;
+            font-family: 'Nanum Gothic', serif;
+            background-color: rgba(204, 204, 204, .8);
+            max-width: 600px;
+            margin: .5em auto;
+            padding: 1em 0;
+            border-radius: .5em;
+        }
+
+        .main-dots {
+            z-index: 9;
+            position: absolute;
+            pointer-events: none;
+            overflow: hidden;
+            width: 100%;
+            top: 180px;
+            height: 100px;
+        }
+
+        .slide-numbers {
+            top: 0px;
+            direction: ltr;
+            width: 100%;
+            box-sizing: border-box;
+            position: absolute;
+            padding: 0 4%;
+            /* background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(1, 0, 0, 0.8) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(1, 0, 0, 0.8)));
+    background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(1, 0, 0, 0.8) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(1, 0, 0, 0.8) 100%); */
+            opacity: 1;
+            text-align: left;
+        }
+
+        .dotContainer {
+            position: relative;
+            top: 85px;
+            display: inline-block;
+            vertical-align: top;
+            width: 22%;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.4);
+            margin: 0 1%;
+            overflow: hidden;
+        }
+
+        .dot {
+            animation-name: move;
+            animation-duration: 5s;
+            /* animation-iteration-count: 3; */
+
+            animation-delay: 0;
+            animation-name: move;
+            animation-timing-function: ease-in;
+            animation-play-state: running;
+            /* animation-iteration-count: infinite; */
+            animation-fill-mode: backwards;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            left: -100%;
+            overflow: hidden;
+            display: block;
+            background-color: #fcfcfc;
+            /* animation: move 2s 2s fowards; */
+        }
+
+        @keyframes move {
+            from {
+                left: 0%
+            }
+
+            to {
+                left:100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel-container">
+        <div class="carousel-imgs">
+            <img src="https://www.w3schools.com/howto/img_mountains_wide.jpg" class="carousel-img visible" />
+            <img src="http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/back07.jpg"
+                class="carousel-img  hidden" />
+            <img src="https://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/back05.jpg"
+                class="carousel-img  hidden" />
+            <img src="https://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/back05.jpg"
+                class="carousel-img  hidden" />
+        </div>
+        <a class="prev arrow">&#10094;</a>
+        <a class="next arrow">&#10095;</a>
+        <!-- <div class="slide-numbers">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div> -->
+        <div class="main-dots">
+            <div class="slide-numbers">
+                <div class="dotContainer">
+                    <span class="dot"></span>
+                </div>
+                <div class="dotContainer">
+                    <span class="dot"></span>
+                </div>
+                <div class="dotContainer">
+                    <span class="dot"></span>
+                </div>
+                <div class="dotContainer">
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="carousel-captions">
+        <p class="carousel-caption visible">Mountain Range 1</p>
+        <p class="carousel-caption hidden">Mountain Range 2</p>
+        <p class="carousel-caption hidden">Mountain Range 3</p>
+        <p class="carousel-caption hidden">Mountain Range 4</p>
+    </div>
+    <script>
+        // Variables
+        let prev = document.querySelector('.prev');
+        let next = document.querySelector('.next');
+        let imgs = document.querySelectorAll('.carousel-img');
+        let dots = document.querySelectorAll('.dot');
+        let captions = document.querySelectorAll('.carousel-caption')
+        let totalImgs = imgs.length;
+        let imgPosition = 0;
+
+        // Event Listeners
+        next.addEventListener('click', nextImg);
+        prev.addEventListener('click', prevImg);
+
+        // Update Position
+        function updatePosition() {
+            //   Images
+            for (let img of imgs) {
+                img.classList.remove('visible');
+                img.classList.add('hidden');
+            }
+            imgs[imgPosition].classList.remove('hidden');
+            imgs[imgPosition].classList.add('visible')
+            //   Dots
+            // for (let dot of dots) {
+            //     dot.className = dot.className.replace(" active", "");
+            // }
+            // dots[imgPosition].classList.add('active');
+            //   Captions
+            for (let caption of captions) {
+                caption.classList.remove('visible');
+                caption.classList.add('hidden');
+            }
+            captions[imgPosition].classList.remove('hidden');
+            captions[imgPosition].classList.add('visible')
+        }
+
+        // Next Img
+        function nextImg() {
+            if (imgPosition === totalImgs - 1) {
+                imgPosition = 0;
+            } else {
+                imgPosition++;
+            }
+            updatePosition();
+        }
+        //Previous Image
+        function prevImg() {
+            if (imgPosition === 0) {
+                imgPosition = totalImgs - 1;
+            } else {
+                imgPosition--;
+            }
+            updatePosition();
+        }
+
+        // Dot Position
+        dots.forEach((dot, dotPosition) => {
+            dot.addEventListener("click", () => {
+                imgPosition = dotPosition
+                updatePosition(dotPosition)
+            })
+        })
+
+        // hover the buttons
+
+        function showButtons() {
+            prev.style.display = 'block';
+            next.style.display = 'block';
+        }
+
+        function hideButtons() {
+            prev.style.display = 'none';
+            next.style.display = 'none';
+        }
+
+        document.querySelector('.carousel-container').addEventListener('mouseenter', showButtons);
+        document.querySelector('.carousel-container').addEventListener('mouseleave', hideButtons);
+        setInterval(function () {
+            nextImg()
+        }, 5000)
+
+    </script>
+
+</body>
+
+</html>

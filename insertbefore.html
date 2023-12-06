@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Before JS</title>
+</head>
+<body>
+    <ul>
+        <li>Cofee</li>
+        <li>Tea</li>
+    </ul>
+    <!-- <script>
+        let li = document.createElement('li');
+        li.textContent = 'Lassi';
+        ul = document.querySelector('ul');
+        ul.insertBefore(li,ul.children[0]);
+    </script> -->
+
+    <script>
+        let li = document.createElement('li');
+        li.textContent = 'Milk';
+        tar_li = document.querySelector('li');
+        tar_li.parentNode.insertBefore(li,tar_li.next);
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       .slider-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slides {
+  display: flex;
+}
+
+.slide {
+  width: 100%;
+  object-fit: cover;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.slider-speed {
+  width: 100%;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+    <div class="slider-container">
+        <div class="slider">
+          <div class="slides">
+            <img src="image1.jpg" alt="Image 1" class="slide">
+            <img src="image2.jpg" alt="Image 2" class="slide">
+            <img src="image3.jpg" alt="Image 3" class="slide">
+          </div>
+        </div>
+        <input type="range" min="1" max="10" value="5" class="slider-speed">
+        <button class="prev">Previous</button>
+        <button class="next">Next</button>
+      </div>
+      
+    <script>
+       let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+const sliderSpeed = document.querySelector('.slider-speed');
+
+function showSlide(index) {
+  if (index < 0) {
+    currentSlide = totalSlides - 1;
+  } else if (index >= totalSlides) {
+    currentSlide = 0;
+  } else {
+    currentSlide = index;
+  }
+
+  const slideWidth = slides[currentSlide].clientWidth;
+  document.querySelector('.slider').style.transform = `translateX(${-slideWidth * currentSlide}px)`;
+}
+
+prevButton.addEventListener('click', () => {
+  showSlide(currentSlide - 1);
+});
+
+nextButton.addEventListener('click', () => {
+  showSlide(currentSlide + 1);
+});
+
+// Automatic slide change
+let autoSlideInterval;
+
+function startAutoSlide() {
+  const speed = sliderSpeed.value * 100; // Adjust speed according to the slider value
+  autoSlideInterval = setInterval(() => {
+    showSlide(currentSlide + 1);
+  }, speed);
+}
+
+function stopAutoSlide() {
+  clearInterval(autoSlideInterval);
+}
+
+sliderSpeed.addEventListener('input', () => {
+  stopAutoSlide();
+  startAutoSlide();
+});
+
+startAutoSlide(); // Start automatic slide change initially
+    </script>
+</body>
+
+</html>

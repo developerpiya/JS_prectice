@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 500px;
+            height: 350px;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            /* position: relative; */
+            width: 500px;
+            height: 300px;
+        }
+
+        .slider img {
+            width: 500px;
+            height: 300px;
+            position: absolute;
+        }
+
+        /* .staticSlide {
+            animation: 6s linear 0s infinite running zoomi;
+            &:hover {
+                animation-play-state: paused;
+            }
+        } */
+
+        @keyframes zoomi {
+            to {
+                transform: scale(1);
+            }
+
+            from {
+                transform: scale(0.9);
+            }
+        }
+
+        /* sliding for images */
+        .sliding-right {
+            animation: move 3s 0s infinite forwards;
+            animation-play-state: running;
+            /* transition: transform 2s; */
+
+            /* &:hover {
+                animation-play-state: paused;
+            } */
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateX(0);
+
+            }
+
+            100% {
+                transform: translateX(100%);
+                /* opacity: 0; */
+                display: none;
+            }
+
+        }
+
+        .sliding-left {
+            animation: left-move 3s 0s infinite forwards;
+            animation-play-state: running;
+            /* transition: transform 2s; */
+
+            /* &:hover {
+                animation-play-state: paused;
+            } */
+        }
+
+        @keyframes left-move {
+            from {
+                transform: translateX(0%);
+
+            }
+
+            to {
+                transform: translateX(-100%);
+                /* opacity:0; */
+                /* display: none; */
+            }
+        }
+
+        /* sliding for captions */
+
+        .caption-next {
+            animation: nextMove 3s 0s infinite forwards;
+        }
+
+        @keyframes nextMove {
+            to {
+                opacity: 1;
+            }
+
+            from {
+                opacity: 0;
+            }
+        }
+
+
+        /* buttons style */
+        .buttons {
+            display: block;
+        }
+
+        .arrow {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            border: none;
+            margin: -1.5em 0.3em 0 0.3em;
+            padding: 8px 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5em;
+            transition: 1s ease;
+            user-select: none;
+            background-color: #9E9E9E;
+        }
+
+        .next {
+            left: -7px;
+        }
+
+        .prev {
+            right: -7px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            box-shadow: 0 0 5px #fff;
+            border: 1px solid #fff;
+        }
+
+
+        /* progress bar */
+
+        .progress {
+            height: 3px;
+            width: 100%;
+            position: relative;
+        }
+
+        .progress #length {
+            position: absolute;
+            top: -20px;
+            /* bottom: 30px; */
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #bdd5ea;
+        }
+
+        .progress #progress__animation {
+            position: absolute;
+            /* bottom: 30px; */
+            top: -20px;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #577399;
+            z-index: 55;
+            animation: moving;
+            animation-duration: 12s;
+            /* 3s per slide */
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes moving {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .progress .slider__count {
+            position: absolute;
+            left: 0;
+            top: -20px;
+            z-index: 99;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            /* border: 1px solid #f7f7f7; */
+        }
+
+        .slider__count .count {
+            width: 25%;
+            /* display: flex;
+            gap: 2px; */
+            border-right: 3px solid #f7f7f7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- slider -->
+        <div class="slider">
+            <img src="../images/img-2.webp" alt="" class="staticSlide">
+            <img src="../images/img-1.webp" alt="" class="slide">
+        </div>
+
+        <!-- buttons -->
+        <div class="buttons">
+            <button class="arrow prev" onclick="prev()">&#10095;++</button>
+            <button class="arrow next" onclick="next()">&#10094;--</button>
+        </div>
+        <!-- progress bar -->
+        <div class="progress">
+            <div id="length"></div>
+            <div id="progress__animation"></div>
+            <div class="slider__count">
+                <div class="count"></div>
+                <div class="count"></div>
+                <div class="count"></div>
+                <div class="count"></div>
+
+            </div>
+        </div>
+
+        <!-- captions -->
+        <div class="caption">
+            <p class="staticCaption">Caption 1</p>
+            <p class="slideCaption">Caption 2</p>
+        </div>
+    </div>
+    <script>
+
+        //for slide defining
+        const arr = ['../images/img-1.webp', '../images/img-2.webp', '../images/img-3.webp', '../images/img-4.webp'];
+        var i = 0;
+        var staticSlide = document.querySelector('.staticSlide');
+        var slide = document.querySelector('.slide');
+        // console.log(arr.length);
+
+        //for caption defining
+        var captionArr = ['caption1', 'caption2', 'caption3', 'caption4'];
+        var staticCaption = document.querySelector('.staticCaption');
+        var slideCaption = document.querySelector('.slideCaption');
+
+        function prev() {
+
+            if (i == arr.length - 1) {
+                console.log('if i==3', i);
+                slide.src = arr[i];
+                slideCaption.innerHTML = captionArr[i];
+                staticSlide.src = arr[0];
+                staticCaption.innerHTML = captionArr[0];
+                slide.classList.add('sliding-left');
+                slideCaption.classList.add('caption-next');
+                // slide.style.opacity = '1'; 
+                // slide.style.transform = 'translateX(-100%)'; 
+                i = 0;
+            } else if (i < arr.length - 1) {
+                console.log('i<3',i)
+                slide.src = arr[i];
+                slideCaption.innerHTML = captionArr[i];
+                staticSlide.src = arr[i + 1];
+                staticCaption.innerHTML = captionArr[i + 1];
+                slide.classList.add('sliding-left');
+                slideCaption.classList.add('caption-next');
+                i++;
+            }
+
+        }
+
+        function next(){
+            if(i==arr.length-1){
+                console.log('i==arr.length-1',i)
+                slide.src = arr[i];
+                slideCaption.innerHTML = captionArr[i];
+                staticSlide.src = arr[arr.length-2];
+                staticCaption.innerHTML = captionArr[arr.length-2];
+                slide.classList.add('sliding-right');
+                slideCaption.classList.add('caption-next');
+                i--;
+            } else if(i==0){
+                console.log('i==0',i)
+                slide.src = arr[0];
+                slideCaption.innerHTML = captionArr[0];
+                staticSlide.src = arr[arr.length-1];
+                staticCaption.innerHTML = captionArr[arr.length-1];
+                slide.classList.add('sliding-right');
+                slideCaption.classList.add('caption-next');
+                i=arr.length-1;
+            }else{
+                slide.src = arr[i];
+                slideCaption.innerHTML = captionArr[i];
+                staticSlide.src = arr[i-1];
+                staticCaption.innerHTML = captionArr[i-1];
+                slide.classList.add('sliding-right');
+                slideCaption.classList.add('caption-next');
+                i--;
+            }
+        }
+
+        // document.querySelector('.container').addEventListener('mouseleave', function () {
+        //     document.querySelector('.buttons').style.display = 'none';
+        //     document.querySelector('.progress').style.display = 'block';
+        // })
+        // document.querySelector('.container').addEventListener('mouseover', function () {
+        //     document.querySelector('.buttons').style.display = 'block';
+        //     document.querySelector('.progress').style.display = 'none';
+        // })
+
+        
+        // let deleteInterval;
+        // function autoSlide() {
+        //     deleteInterval = setInterval(timer, 3000);
+        //     function timer() {
+        //         prev();
+        //     }
+        // }
+
+        
+        // const container = document.querySelector('.container');
+        // var anim1 = document.querySelector('.sliding-left');
+        // var anim2 = document.querySelector('.sliding-right');
+       
+        // container.addEventListener('mouseover', function () {
+        //     clearInterval(deleteInterval);
+        // })
+
+        
+        // container.addEventListener('mouseleave', autoSlide);
+
+        // autoSlide();
+   
+
+    </script>
+</body>
+
+</html>

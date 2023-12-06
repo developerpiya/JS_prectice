@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #00BDC4;
+}
+.slider-box{
+    width: 90%;
+    height: 90vh;
+    margin: 30px auto;
+    position: relative;
+}
+#slider{
+    width: 100%;
+    display: inline-flex;
+}
+#slider img{
+width: 100%;
+}
+.indicators{
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+}
+.indicators span{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+}
+.active{
+    background-color: #fff !important;
+}
+    </style>
+</head>
+<body>
+    <div class="slider-box">
+        <div id="slider">
+            <img src="https://www.w3schools.com/howto/img_mountains_wide.jpg" class="carousel-img visible" />
+        <img src="http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/back07.jpg"
+            class="carousel-img  hidden" />
+        <img src="https://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/back05.jpg"
+            class="carousel-img  hidden" />
+        <img src="http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/back07.jpg"
+            class="carousel-img  hidden" />
+        </div>
+        <div class="indicators">
+            <span id="btn1" class="active"></span>
+            <span id="btn2"></span>
+            <span id="btn3"></span>
+            <span id="btn4"></span>
+        </div>
+    </div>
+    <script>
+        var slide = document.getElementById('slider');
+        var btn1 = document.getElementById('slider');
+        var btn2 = document.getElementById('btn2');
+        var btn3 = document.getElementById('btn3');
+        var btn4 = document.getElementById('btn4');
+
+        btn1.onclick = function(){
+            slide.style.transform = 'translateX(0px)';
+            btn1.classList.add('active');
+        }
+
+        btn2.onclick = function(){
+            slide.style.transform = 'translateX(-100%)';
+            btn2.classList.add('active');
+        }
+
+        btn3.onclick = function(){
+            slide.style.transform = 'translateX(-200%)';
+            btn3.classList.add('active');
+        }
+
+        btn4.onclick = function(){
+            slide.style.transform = 'translateX(-300%)';
+            btn4.classList.add('active');
+        }
+    </script>
+</body>
+</html>
