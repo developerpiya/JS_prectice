@@ -2,96 +2,363 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .container {
-      width: 500px;
-      height: 350px;
-      margin: auto;
-      /* position: relative; */
-      overflow: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 500px;
+            height: 350px;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .slider {
-      display: flex;
-      transition: transform 0.5s ;
-      position: relative;
-    }
-    .slide {
-      width: 100%;
-      /* position: absolute; */
-    }
-    .arrow {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      width: auto;
-      border: none;
-      margin: -1.5em 0.3em 0 0.3em;
-      padding: 8px 15px;
-      color: white;
-      font-weight: bold;
-      font-size: 1.5em;
-      transition: 1s ease;
-      user-select: none;
-      background-color: #9E9E9E;
-    }
+        .slider {
+            display: flex;
+            justify-content: center;
+            width: 500px;
+            height: 300px;
+        }
 
-    .next {
-      left: -7px;
-    }
+        .slider img {
+            width: 500px;
+            height: 300px;
+            position: absolute;
+        }
+        .noSlide{
+          display: flex;
+        }
 
-    .prev {
-      right: -7px;
-    }
+        .sliding-right {
+            animation: move 3s 0s 1 forwards;
+        }
 
-    .prev:hover,
-    .next:hover {
-      box-shadow: 0 0 5px #fff;
-      border: 1px solid #fff;
-    }
-  </style>
+        @keyframes move {
+            from {
+                transform: translateX(0);
+
+            }
+
+            to {
+                transform: translateX(100%);
+                display: none;
+            }
+
+        }
+      
+
+        .sliding-left {
+            animation: left-move 3s 0s 1 forwards;
+        }
+
+        @keyframes left-move {
+            from {
+                transform: translateX(0);
+
+            }
+            to {
+                transform: translateX(-100%);
+                display: none;
+            }
+        }
+
+        /* sliding for captions */
+
+        .caption-next {
+            animation: nextMove 3s 0s infinite forwards;
+        }
+
+        @keyframes nextMove {
+            to {
+                opacity: 1;
+            }
+
+            from {
+                opacity: 0;
+            }
+        }
+
+
+        /* buttons style */
+        .buttons {
+            display: none;
+        }
+
+        .arrow {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            border: none;
+            margin: -1.5em 0.3em 0 0.3em;
+            padding: 8px 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5em;
+            transition: 1s ease;
+            user-select: none;
+            background-color: #9E9E9E;
+        }
+
+        .next {
+            left: -7px;
+        }
+
+        .prev {
+            right: -7px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            box-shadow: 0 0 5px #fff;
+            border: 1px solid #fff;
+        }
+
+
+        /* progress bar */
+
+        .progress {
+            height: 3px;
+            width: 100%;
+            position: relative;
+        }
+
+        .progress #length {
+            position: absolute;
+            top: -20px;
+            /* bottom: 30px; */
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #bdd5ea;
+        }
+
+        .progress #progress__animation {
+            position: absolute;
+            /* bottom: 30px; */
+            top: -20px;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #577399;
+            z-index: 55;
+            animation: moving;
+            animation-duration: 12s;
+            /* 3s per slide */
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes moving {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .progress .slider__count {
+            position: absolute;
+            left: 0;
+            top: -20px;
+            z-index: 99;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            /* border: 1px solid #f7f7f7; */
+        }
+
+        .slider__count .count {
+            width: 25%;
+            /* display: flex;
+            gap: 2px; */
+            border-right: 3px solid #f7f7f7;
+        }
+        
+    </style>
 </head>
 
 <body>
-  <div class="container">
-    <!-- slider -->
-    <div class="slider">
-      <img src="../images/img-1.webp" alt="" class="slide">
-      <img src="../images/img-2.webp" alt="" class="slide">
-      <img src="../images/img-3.webp" alt="" class="slide">
-      <img src="../images/img-4.webp" alt="" class="slide">
+    <div class="container">
+        <!-- slider -->
+        <div class="slider">
+            <img src="../images/img-2.webp" alt="" class="items sliding-right">
+            <img src="../images/img-1.webp" alt="" class="items noSlide">
+            <img src="../images/img-2.webp" alt="" class="items noSlide">
+            <img src="../images/img-1.webp" alt="" class="items noSlide">
+        </div>
+
+        <!-- buttons -->
+        <div class="buttons">
+            <button class="arrow prev" onclick="nextImg()">&#10095;++</button>
+            <button class="arrow next" onclick="nextImg()">&#10094;--</button>
+        </div>
+        <!-- progress bar -->
+        <div class="progress">
+            <div id="length"></div>
+            <div id="progress__animation"></div>
+            <div class="slider__count">
+                <div class="count"></div>
+                <div class="count"></div>
+                <div class="count"></div>
+                <div class="count"></div>
+
+            </div>
+        </div>
+
+        <!-- captions -->
+        <div class="caption">
+            <p class="staticCaption">Caption 1</p>
+            <p class="slideCaption">Caption 2</p>
+        </div>
     </div>
+    <script>
+        var i = 0;
+        var items = document.querySelectorAll('.items');
+        var noSlide = document.querySelectorAll('.noSlide');
+        var slidingRight = document.querySelectorAll('.sliding-right');
+        var imgPosition = 0;
+        //for caption defining
+        var captionArr = ['caption1', 'caption2', 'caption3', 'caption4'];
+        var staticCaption = document.querySelector('.staticCaption');
+        var slideCaption = document.querySelector('.slideCaption');
+        var currentIndex =0;
 
-    <!-- buttons -->
-    <div class="buttons">
-      <button class="arrow prev" onclick="prevSlide()">&#10095;++</button>
-      <button class="arrow next" onclick="nextSlide()">&#10094;--</button>
-    </div>
 
-  </div>
-  <script>
-    let currentIndex = 0;
-    const container = document.querySelector('.slider');
-    const items = document.querySelectorAll('.slide');
-    const totalItems = items.length;
+        function updatePosition(){
+            for(let item of items){
+              item.classList.remove('sliding-right');
+              item.classList.add('noSlide');
+            }
+            items[imgPosition].classList.add('sliding-right');
+            items[imgPosition].classList.remove('noSlide');
+        }
 
-    function updateCarousel() {
-      container.style.transform = `translateX(${-currentIndex * 100}%)`;
-    }
+        function nextImg() {
+            if (imgPosition === items.length - 1) {
+                imgPosition = 0;
+            } else {
+                imgPosition++;
+            }
+            updatePosition();
+        }
 
-    function nextSlide() {
-      currentIndex = (currentIndex + 1) % totalItems;
-      updateCarousel();
-    }
+        function prevImg() {
+            if (imgPosition === 0) {
+                imgPosition = items.length - 1;
+            } else {
+                imgPosition--;
+            }
+            updatePosition();
+        }
+        
+        function update() {
+        if (i == arr.length - 1) {
+            // console.log('if i==3', i);
+            slide.src = arr[i];
+            slideCaption.innerHTML = captionArr[i];
+            staticSlide.src = arr[0];
+            staticCaption.innerHTML = captionArr[0];
+            slide.classList.add('sliding-left');
+            slideCaption.classList.add('caption-next');
+            i = 0;
+        } else if (i < arr.length - 1) {
+            // console.log('i<3',i)
+            slide.src = arr[i];
+            slideCaption.innerHTML = captionArr[i];
+            staticSlide.src = arr[i + 1];
+            staticCaption.innerHTML = captionArr[i + 1];
+            slide.classList.add('sliding-left');
+            
+            slideCaption.classList.add('caption-next');
+            i++;
+        }
 
-    function prevSlide() {
-      currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-      updateCarousel();
-    }
-  </script>
+        }
+
+        function prev() {
+        if (i == arr.length - 1) {
+            slide.src = arr[i];
+            slideCaption.innerHTML = captionArr[i];
+            staticSlide.src = arr[0];
+            staticCaption.innerHTML = captionArr[0];
+            slide.classList.add('sliding-left')
+            i = 0;
+        } else if (i < arr.length - 1) {
+            console.log('else condition');
+            slide.src = arr[i];
+            slideCaption.innerHTML = captionArr[i];
+            staticSlide.src = arr[i + 1];
+            staticCaption.innerHTML = captionArr[i + 1];
+            console.log(slide.classList.add('sliding-left'));
+            slide.classList.add('sliding-left');
+            i++;
+        }
+        
+        slideCaption.classList.add('caption-next');
+        }  
+       
+      function next() {
+            if (i == arr.length - 1) {
+                console.log('i==arr.length-1', i)
+                slide.src = arr[i];
+                slideCaption.innerHTML = captionArr[i];
+                staticSlide.src = arr[arr.length - 2];
+                staticCaption.innerHTML = captionArr[arr.length - 2];
+                i--;
+            } else if (i == 0) {
+                console.log('i==0', i)
+                slide.src = arr[0];
+                slideCaption.innerHTML = captionArr[0];
+                staticSlide.src = arr[arr.length - 1];
+                staticCaption.innerHTML = captionArr[arr.length - 1];
+                i = arr.length - 1;
+            } else {
+                slide.src = arr[i];
+                slideCaption.innerHTML = captionArr[i];
+                staticSlide.src = arr[i - 1];
+                staticCaption.innerHTML = captionArr[i - 1];
+                i--;
+            }
+            slide.classList.add('sliding-right');
+                slideCaption.classList.add('caption-next');
+        }
+
+        document.querySelector('.container').addEventListener('mouseleave', function () {
+            document.querySelector('.buttons').style.display = 'none';
+            document.querySelector('.progress').style.display = 'block';
+            // slide.classList.add('sliding-left');
+        })
+        document.querySelector('.container').addEventListener('mouseover', function () {
+            document.querySelector('.buttons').style.display = 'block';
+            document.querySelector('.progress').style.display = 'none';
+        })
+
+        //autoslide
+        // let deleteInterval;
+        // function autoSlide() {
+        //     deleteInterval = setInterval(timer, 3000);
+        //     function timer() {
+        //         update();
+        //     }
+        // }
+
+        // stop auto sliding when mouse is over
+        // const container = document.querySelector('.container');
+        
+        // container.addEventListener('mouseover', function () {
+        
+        //     clearInterval(deleteInterval);
+        // })
+
+        // Resume slide when mouse leave
+        // container.addEventListener('mouseleave', autoSlide);
+
+        // autoSlide();
+    </script>
 </body>
 
 </html>

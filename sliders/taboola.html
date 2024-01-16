@@ -275,9 +275,6 @@
         }
 
         function prev() {
-            console.log('sliding-righ add',document.querySelector('.sliding-left'))
-        document.querySelector('.sliding-left') ? (slide.classList.remove('sliding-left'), console.log('sliding-righ exist remove',slide.classList.remove('sliding-left')) ):( slide.classList.add('sliding-left'),console.log('false condition'));
-        
         if (i == arr.length - 1) {
             slide.src = arr[i];
             slideCaption.innerHTML = captionArr[i];
@@ -296,10 +293,7 @@
             i++;
         }
         
-      
         slideCaption.classList.add('caption-next');
-        
-
         }  
        
       function next() {

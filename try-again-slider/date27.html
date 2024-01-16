@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    #slider {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 50vw;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  background-size: cover;
+  background-position: 50% 50%;
+  
+  animation-fill-mode: forwards;
+  animation-duration: 700ms;
+  animation-timing-function: ease;  
+}
+
+.image-1 {
+  background-image: url("http://www.freedigitalphotos.net/images/img/homepage/87357.jpg");
+}
+
+.image-2 {
+  background-image: url("http://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg");
+}
+
+.image-3 {
+  background-image: url("http://www.gettyimages.ca/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg");
+}
+
+
+@keyframes slide-out-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+@keyframes slide-out-right {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes slide-in-from-left {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes slide-in-from-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+  </style>
+</head>
+<body>
+  <div id="slider" data-showing="1">
+    <div class="slide image-1"></div>
+    <div class="slide image-2"></div>
+    <div class="slide image-3"></div>
+  </div>
+  <button class="button previous">left</button>
+  <button class="button next">right</button>
+  
+  <script>
+    console.clear();
+
+function initSlider() {
+  var slider = document.querySelector("#slider");
+  var previousButton = document.querySelector(".previous");
+  var nextButton = document.querySelector(".next");
+  var slides = slider.querySelectorAll(".slide");
+  var animationDuration = 700;
+  
+  // put slides in it's initial place
+  var currentIndex = slider.dataset.showing * 1;
+  console.log('currentIndex',currentIndex);
+  [].forEach.call(document.querySelectorAll(".slide"), function(elem, i){
+    i = i+1; // index starts at 0
+    if(i === currentIndex) return;
+    elem.style.transform = i < currentIndex ? "translateX(-100%)" : "translateX(100%)";
+  });
+  
+  // prevent user from bursting through the slides.
+  function onAnimationEnd() {
+    clearTimeout(slider.isMoving);
+    slider.isMoving = undefined;
+  }
+  
+  function moveSlide(animationName){
+    var direction = 0;
+    if(animationName === "left") direction = -1;
+    if(animationName === "right") direction = 1;
+
+    return function() {
+      // check if it is currently moving
+      if(!isNaN(slider.isMoving)) return;
+      // some old devices might skip a few animationEnd events
+      // setTimeout is used as a last reource to prevent that to happen.
+      slider.isMoving = setTimeout(onAnimationEnd, animationDuration + 50);
+
+      var current = slider.dataset.showing * 1;
+      var next = current + direction;
+      if(next < 1) next = 3;
+      if(next > slides.length) next = 1;
+
+      var currentSlide = slider.querySelector(".image-" + current);
+      var nextSlide = slider.querySelector(".image-" + next);
+
+      currentSlide.style.animationName = "slide-out-" + animationName;
+      nextSlide.style.animationName = "slide-in-from-" + animationName;
+
+      slider.dataset.showing = next;
+    };
+  }
+  
+  previousButton.addEventListener("click", moveSlide("left"), false);
+  nextButton.addEventListener("click", moveSlide("right"), false);
+  slider.addEventListener("animationend", onAnimationEnd, false);
+}
+
+window.addEventListener("load", initSlider, false);
+  </script>
+</body>
+</html>
